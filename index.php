@@ -18,10 +18,10 @@ require "include/head-data.html";
 	<button type="button" class="btn dropdown-toggle bg-white btn-block border border-body" data-toggle="dropdown">Account</button>
 	<div class="dropdown-menu bg-dark text-white">
 	<a class="dropdown-item bg-dark text-white" href="login.php">Login</a>
-	<a class="dropdown-item bg-dark text-white" href="create-account.php">Create Account</a>
+	<a class="dropdown-item bg-dark text-white" href="create_account.php">Create Account</a>
 	</div>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.replace('help.php')">Help</button>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.replace('about.php')">About</button>
+		<button type="button" class="btn bg-white btn-block border border-body" onclick="document.location('help.php')">Help</button>
+		<button type="button" class="btn bg-white btn-block border border-body" onclick="document.location('about.php')">About</button>
 	</div>
 	</div>
 	<div class="col-sm-10 bg-primary text-body">
@@ -46,8 +46,5 @@ require "include/head-data.html";
 .jumbotron-heading{font-size:9rem;}
 }
 </style>
-<script>
-//any script should go here
-</script>
 </body>
 </html>
