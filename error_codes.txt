@@ -1,0 +1,21 @@
+Gift Exchange custom error codes (Gift Exchange) THIS DOCUMENT MAY BE UPDATED, AND SHOULD BE UPDATED DURING ACTIVE DEVELOPMENT
+All of these codes indicate some sort of error. They are completely made up.
+They are organized like this:
+100s = File error
+200s = Database error
++================+
+|   100s:        |
++================+
+101: File not found
+Error 101 occurs when a file is missing, such as a "require" file.
+
++================+
+|   200s:        |
++================+
+201: MYSQL Connection Error
+Error 201 occurs when a connection cant be established to the sql server
+202: MYSQL Missing Data Error
+Error 202 occurs when there is no data in a table. This might is not a significant error, and will occur often during normal operation of the site (I.e. its a notice)
+
+Thats all I got for now, but this file should be updated when new error handling is discovered.
+Users are directed to a google form to submit errors. Errors are also logged. 

@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
 <?php
-require "include/head-data.html"
+//error handling
+if (file_exists("include/head_data.html")){
+require "include/head_data.html";
+}else{
+	error_log("Eror Code 101: include/head_data.html is missing![create_account.php]");
+	die ("<div style='text-align:center;' class='alert alert-danger'><b>Error:</b>File is missing. Error has been logged. Please <a target='_blank' href='https://forms.gle/A3aaKieUBzj4mG1C9' class='alert-link'>notify developer</a> if error persists.  [Error Code: 101]</div>");
+	}
 ?>
 <title>About Gift Exchange</title>
 </head>
