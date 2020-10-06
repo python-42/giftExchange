@@ -15,7 +15,8 @@ Error 101 occurs when a file is missing, such as a "require" file.
 201: MYSQL Connection Error
 Error 201 occurs when a connection cant be established to the sql server
 202: MYSQL Missing Data Error
-Error 202 occurs when there is no data in a table. This might is not a significant error, and will occur often during normal operation of the site (I.e. its a notice)
+Error 202 occurs when there is no data in a table.
 
-Thats all I got for now, but this file should be updated when new error handling is discovered.
+Thats all I got for now, but this file should be updated when new error
+ handling is discovered.
 Users are directed to a google form to submit errors. Errors are also logged. 
