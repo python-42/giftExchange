@@ -18,7 +18,7 @@ require "include/head-data.html";
 	<form method="post" name="create">
 		<div class="form-group">
 			<label for="username-box">Username: </label>
-			<input type="text" name="username-box" placeholder="Enter A Username" class="form-control" maxlength="20" required>
+			<input type="text" name="username-box" placeholder="Enter A Username" class="form-control" minlength="5" maxlength="20"  onkeyup="checkUsername(this.value)" required>
 		</div>
 		<div class="form-group">
 			<label for="password-box">Password: </label>
@@ -28,6 +28,7 @@ require "include/head-data.html";
 		<label for="confirm-box">Confirm Password: </label>
 		<input type="password" onkeyup="testPassword()" name="confirm-box" placeholder="Confirm Your Password" class="form-control" minlength="8" maxlength="20" required>
 		</div>
+		<p class="text-danger" id="usernameError"></p>
 		<p class="text-danger" id="errorTxt"></p>
 		<button type="submit" class="btn btn-primary">Create Account</button>
 	</form>
@@ -68,6 +69,7 @@ function createUser($user, $pass){
 	$checkSQL = "SELECT username FROM login WHERE username='".$user."'";
 	$selected = $conn->query($checkSQL);
 	if ($selected->num_rows == 1){
+		$_SESSION["logged"] == $username;
 		echo "<script>location.replace('account.php')</script>";
 		}else{
 			error_log("Error Code 202: Expected data in table login, but data was absent. [create_account.php]");
@@ -79,6 +81,9 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
 $username = $_POST["username-box"];
 $password = $_POST["password-box"];
 $confirm = $_POST["confirm-box"];
+$username = trim($username);
+$password = trim($password);
+$confirm = trim($confirm);
 $createOK = true;
 $errorMsg = "";
 //runs a few checks to verify all the things
@@ -115,8 +120,21 @@ if ($createOK){
 ?>
 <script>
 //ajax which does a few checks for user convience. Futher checks are preformed using php once data is sent to the server. These checks are all about username
-var ajax = new XMLHttpRequest();
-//finish
+function checkUsername(temp){
+	if (temp.length > 4){
+		var ajax = new XMLHttpRequest();
+		ajax.open("GET","checkusername.php?i="+temp, true);
+		ajax.send();
+		ajax.onreadystatechange = function(){
+			if (this.readystate == 4 && this.status == 200){
+				console.log(this.responseText);//this is still broken
+				document.getElementById("usernameError").innerHTML = this.responseText;
+				}
+			}
+		}else{
+			document.getElementById("usernameError").innerHTML = "";
+			}
+	}
 //this checks that the passwords match
 function testPassword() {
 var password = document.forms["create"]["password-box"].value;
