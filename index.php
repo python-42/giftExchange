@@ -17,7 +17,7 @@ require "include/head-data.html";
 	<div class="jumbotron text-danger border border-primary"><h1 class="jumbotron-heading">GIFT EXCHANGE</h1></div>
 	<div class="row">
 	<div class="col-sm-2 pb-3 bg-secondary">
-	<h2><abbr>Navigation</abbr></h2>
+	<h2>Navigation</h2>
 	<div class="btn-group-vertical btn-block">
 		<button type="button" class="btn btn-primary btn-block active border border-body">Home</button>
 	<button type="button" class="btn dropdown-toggle bg-white btn-block border border-body" data-toggle="dropdown">Account</button>

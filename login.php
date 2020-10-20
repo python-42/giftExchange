@@ -1,4 +1,4 @@
-<?php session_start ?>
+<?php session_start();?>
 <!DOCTYPE=html>
 <html lang="en">
 <head>
@@ -37,7 +37,25 @@ body{
 		text-decoration:underline;
 		}
 </style>
+<div class="modal" id="notifyNotLogged">
+	<div class="modal-dialog modal-dialog-centered">
+	<div class="modal-content">
+	<div class="modal-header">
+	<h4 class="modal-title">Login Error!</h4>
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	</div>
+	<div class="modal-body">You were not logged in. Either your session expired, or you typed in or bookmarked a page which requires you to be logged in. Please avoid typing in the address bar to navigate, use the built-in navigation. <br>To continue using the site, simply log in normally</div>
+	<div class="modal-footer">
+	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+	</div>
+	</div><!-- end for modal-content-->
+	</div><!-- end for modal-dialog-->
+</div>
 <?php
+//if user has been redirected here for lack or login, does a quick modal
+if ($_GET["nl"]){
+	echo "<script>\$(document).ready(function(){\$('#notifyNotLogged').modal();});</script>";
+	}
 //sql vars import
 if (file_exists("include/sql.php")){
 require "include/sql.php";
@@ -65,8 +83,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 		}else{
 			$result = $rawResult->fetch_assoc();
 			if($result["password"]===$password){
-				$_SESSION["logged"] == $username;
-				echo "<script>location.replace('account.php')</script>";
+				$_SESSION["logged"] = $username;
+				echo "<script>location.replace('nav.php');</script>";
 				}else{
 					echo "<div style='text-align:center;' class='alert alert-danger'>Username or password is incorrect!</div>";
 					}

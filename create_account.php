@@ -70,7 +70,7 @@ function createUser($user, $pass){
 	$selected = $conn->query($checkSQL);
 	if ($selected->num_rows == 1){
 		$_SESSION["logged"] == $username;
-		echo "<script>location.replace('account.php')</script>";
+		echo "<script>location.replace('nav.php')</script>";
 		}else{
 			error_log("Error Code 202: Expected data in table login, but data was absent. [create_account.php]");
 			die ("<div style='text-align:center;' class='alert alert-danger'><b>Error:</b> Data is missing from database. Accout creation failed. Error has been logged. Please <a target='_blank' href='https://forms.gle/A3aaKieUBzj4mG1C9' class='alert-link'>notify developer</a> if error persists.  [Error Code: 202]</div>");
