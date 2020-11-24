@@ -28,18 +28,17 @@ require "include/head-data.html";
 	<div class="dropdown-menu bg-dark text-white">
 		<a class="dropdown-item bg-dark text-white" href="lists.php">Lists</a>
 		<a class="dropdown-item bg-dark text-white" href="manage.php">Your List</a>
-		<a class="dropdown-item bg-dark text-white" href="circles.php">Circles</a>
 	</div>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="document.location('account.php')" title="Account Settings">Settings</button>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="document.location('help.php')">Help</button>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="document.location('about.php')">About</button>
+		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('account.php')" title="Account Settings">Settings</button>
+		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('help.php')">Help</button>
+		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('about.php?ref=nav.php&ref-title=Navigation')">About</button>
 		</div>
 	</div><!--end of nav-->
 	<div class="col-sm-10 bg-primary">
 	<h1>Now that your logged in, you can:</h1>
 	<dl>
 		<dt>Browse Lists</dt>
-		<dd>This is the point of GiftExchange. You shoudl join a <a href="help.php/#circles" title="Learn more about circles" class="text-dark">Circle</a> to begin. Click "Lists" in the sidebar to begin.</dd>
+		<dd>This is the point of Gift Exchange. Click "Lists" in the sidebar to begin.</dd>
 		<dt>Manage Your Account</dt>
 		<dd>Your can change your account settings, such as your password. You can also add a profile picture, and an interest. It is recommended that you add an interest right away.</dd>
 		<dt>Browse Help</dt>
@@ -68,11 +67,20 @@ require "include/head-data.html";
 				<div class="card-body">A page which allows users to report bugs, suggest features, or provide other feedback. Basically 3 forms, which are made accessible via a little JavaScript toggle. The data is then sent to a database? or maybe my email? Perhaps I could create a 'Admin Page' with access to data such as the form results? Anyway this page will be linked in several spots.</div>
 			</div>
 		</div><!--end of issue two-->
-		
+		<div class="card">
+			<div class="card-header"><a class="card-link" data-toggle="collapse" href="#issueThree">Lists</a></div>
+			<div id="issueThree" class="collapse show" data-parent="#collapser">
+				<div class="card-body">Create the two list pages. These pages will be divided into tabs for different people (lists) or functions (editing, deleting, adding, etc)</div>
+			</div>
+		</div><!--end of issue three-->	
 	</div><!--end of collapser-->
 	</div>
 </div><!--end of .row-->
 </div><!-- end of .container-fluid-->
+<script>
+//hides collapsable right away
+$(".collapse").collapse("hide");
+</script>
 <style>
 	body{
 		background: linear-gradient(to left,#007bff,#6c757d );

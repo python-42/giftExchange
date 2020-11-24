@@ -3,8 +3,9 @@
 <head>
 <?php
 //error handling
-if (file_exists("include/head_data.html")){
-require "include/head_data.html";
+//$root = $_SERVER["DOCUMENT_ROOT"];
+if (file_exists("include/head-data.html")){
+require "include/head-data.html";
 }else{
 	error_log("Eror Code 101: include/head_data.html is missing![create_account.php]");
 	die ("<div style='text-align:center;' class='alert alert-danger'><b>Error:</b>File is missing. Error has been logged. Please <a target='_blank' href='https://forms.gle/A3aaKieUBzj4mG1C9' class='alert-link'>notify developer</a> if error persists.  [Error Code: 101]</div>");
@@ -27,13 +28,25 @@ require "include/head_data.html";
 	</div>
 	<h2 style="text-align:center;text-decoration:underline;">Breadcrumbs</h2>
 		<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="index.php">Home</a></li>
+		<li class="breadcrumb-item"><a href=<?php if(isset($_REQUEST["ref"]) && isset($_REQUEST["ref-title"]) ){
+			echo $_REQUEST["ref"];
+			}else{
+				echo "index.php";
+				}?>
+				>
+				<?php
+				if(isset($_REQUEST["ref"]) && isset($_REQUEST["ref-title"])){
+					echo $_REQUEST["ref-title"];
+					}else{
+						echo "Home";
+						}?>
+						</a></li>
 		<li class="breadcrumb-item active">About</li>
 		</ul>
 	</div>
 	<div class="col-sm-10 bg-primary">
 	<h1 style="text-align:center;text-decoration:underline;">About Gift Exchange</h1>
-	<p>The following is a brief description of Gift Exchange. If you are looking for the 'Help' page, <a href="help.php" style="color:black;">Click Here</a>.<br>Gift Exchange allows you to connect with friends and family in order to ask for a gift. This way everyone ends up with something that they actually want, and everyone is happy. You can also use Gift Exchange to define more general interests if you want to be surprised by what you recieve.<br>In order to organize your Gift Exchange experience, you can create groups of people, called circles. You can have up to 10 circles. For a more in depth explanation of circles, visit the help page.</p>
+	<p>The following is a brief description of Gift Exchange. If you are looking for the 'Help' page, <a href="help.php" style="color:black;">Click Here</a>.<br>Gift Exchange allows you to connect with friends and family in order to ask for a gift. This way everyone ends up with something that they actually want, and everyone is happy. You can also use Gift Exchange to define more general interests if you want to be surprised by what you recieve.</p>
 	<!-- finish droning on about the site when it is complete -->
 	</div>
 	</div>

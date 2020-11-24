@@ -123,7 +123,7 @@ if ($createOK){
 function checkUsername(temp){
 	if (temp.length > 4){
 		var ajax = new XMLHttpRequest();
-		ajax.open("GET","checkusername.php?i="+temp, true);
+		ajax.open("GET","util/checkusername.php?i="+temp, true);
 		ajax.send();
 		ajax.onreadystatechange = function(){
 			if (this.readystate == 4 && this.status == 200){
