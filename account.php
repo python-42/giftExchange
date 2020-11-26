@@ -96,7 +96,7 @@ $rawResult2 = $conn -> query($selectItemSQL);
 		<h2>Interest</h2>
 		<p class="text-dark">What are your hobbies or interests? 100 characters or less.</p>
 		
-		<form method="post" class="form-group">
+		<form method="post" class="form-group" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
 		<div class="input-group">
 			<div class="input-group-prepend">
 		<span class="input-group-text">Interest:</span>
@@ -142,7 +142,7 @@ $rawResult2 = $conn -> query($selectItemSQL);
 						
 						<div class="modal-footer">
 							<button type="button" class="btn btn-muted border border-dark" data-dismiss="modal">Cancel</button>
-							<form method="post">
+							<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
 							<button type="submit" name="resetImg" id="resetImg" class="btn btn-danger">Reset Image</button>
 							</form>
 						</div>
@@ -169,7 +169,7 @@ $rawResult2 = $conn -> query($selectItemSQL);
 			
 			<h3 class="mt-5">Upload</h3>
 		<p class="text-dark">You may upload a new profile picture here. Make sure it is a square, and is less than 5 KB. It should also be a PNG format.</p>
-		<form class="form-group" method="post" enctype="multipart/form-data">
+		<form class="form-group" method="post" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
 			<div class="input-group">
 				<div class="input-group-prepend">
 					<span class="input-group-text">Upload File: </span>
@@ -191,7 +191,7 @@ $rawResult2 = $conn -> query($selectItemSQL);
 		<h3>Password</h3>
 		<p class="text-dark">Change your password here.</p>
 		
-		<form method="post" class="bg-dark text-primary p-3" name="update">
+		<form method="post" class="bg-dark text-primary p-3" name="update" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
 			<div class="form-group">
 				<label for="current-box">Current Password:</label>
 				<input type="password" class="form-control" placeholder="Enter your current password for security" name="current-box" id="current-box" minlength="5" maxlength="20"  required>
@@ -228,7 +228,7 @@ $rawResult2 = $conn -> query($selectItemSQL);
 				</div>
 			</div>
 			
-			<form class="bg-dark text-primary p-3 mt-3" method="post">
+			<form class="bg-dark text-primary p-3 mt-3" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
 				<div class="form-group">
 					<label for="date-box">Set Birthday: </label>
 					<input type="date" name="date-box" class="form-control" required>
@@ -264,7 +264,7 @@ $rawResult2 = $conn -> query($selectItemSQL);
 						
 						<div class="modal-footer">
 							<button type="button" class="btn btn-muted border border-dark" data-dismiss="modal">Cancel</button>
-							<form method="post">
+							<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
 							<button type="submit" name="deleteItems" id="deleteItems" class="btn btn-danger">Delete Items</button>
 							</form>
 						</div>
@@ -286,7 +286,7 @@ $rawResult2 = $conn -> query($selectItemSQL);
 						<div class="modal-body">
 							<p>Are you sure you would like to delete your account? All of your items, as well as any other information (such as login information) will be deleted. This action is permenant and irreverable. </p>
 							<p>If you are sure you would like to continue, enter your login information to confirm it is actually you.</p>
-							<form method="post">
+							<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
 								<div class="form-group">
 									<label for="username-box">Username: </label>
 									<input type="text" class="form-control" placeholder="Enter your username" name="username-box" id="username-box" maxlength="20" minlength="4" required>

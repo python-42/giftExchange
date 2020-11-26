@@ -15,7 +15,7 @@ require "include/head-data.html";
 <body>
 	<div class="container mt-5 p-3 bg-dark text-primary">
 	<h1>Login</h1>
-	<form method="post">
+	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
 	<div class="form-group">
 	<label for="username-box">Username: </label>
 	<input type="text" name="username-box" id="username-box" class="form-control" minlength="4" maxlength="20" placeholder="Enter Your Username" required>
