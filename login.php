@@ -18,7 +18,7 @@ require "include/head-data.html";
 	<form method="post">
 	<div class="form-group">
 	<label for="username-box">Username: </label>
-	<input type="text" name="username-box" id="username-box" class="form-control" minlength="5" maxlength="20" placeholder="Enter Your Username" required>
+	<input type="text" name="username-box" id="username-box" class="form-control" minlength="4" maxlength="20" placeholder="Enter Your Username" required>
 	</div>
 	<div class="form-group">
 	<label for="password-box">Password: </label>
@@ -82,7 +82,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 		echo "<div style='text-align:center;' class='alert alert-danger'>Username does not exist! Check your entries or create an account <a href=''>Here.</a></div>";
 		}else{
 			$result = $rawResult->fetch_assoc();
-			if($result["password"]===$password){
+			if($result["password"]===$password && $password != "" && $username != ""){
 				$_SESSION["logged"] = $username;
 				echo "<script>location.replace('nav.php');</script>";
 				}else{

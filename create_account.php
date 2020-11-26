@@ -18,7 +18,7 @@ require "include/head-data.html";
 	<form method="post" name="create">
 		<div class="form-group">
 			<label for="username-box">Username: </label>
-			<input type="text" name="username-box" placeholder="Enter A Username" class="form-control" minlength="5" maxlength="20"  onkeyup="checkUsername(this.value)" required>
+			<input type="text" name="username-box" placeholder="Enter A Username" class="form-control" minlength="4" maxlength="20"  onkeyup="checkUsername(this.value)" required>
 		</div>
 		<div class="form-group">
 			<label for="password-box">Password: </label>
@@ -69,7 +69,7 @@ function createUser($user, $pass){
 	$checkSQL = "SELECT username FROM login WHERE username='".$user."'";
 	$selected = $conn->query($checkSQL);
 	if ($selected->num_rows == 1){
-		$_SESSION["logged"] == $username;
+		$_SESSION["logged"] = $user;
 		echo "<script>location.replace('nav.php')</script>";
 		}else{
 			error_log("Error Code 202: Expected data in table login, but data was absent. [create_account.php]");
@@ -87,6 +87,10 @@ $confirm = trim($confirm);
 $createOK = true;
 $errorMsg = "";
 //runs a few checks to verify all the things
+if ($password == "" || $confirm == "" || $username == ""){
+	$createOK = false;
+	$errorMsg = "Nothing may be blank!";
+	}
 if ($password === $confirm){
 	//passwords match, password is now sanitized. confirm var will not be referenced again, so it is unset
 	unset($confirm);

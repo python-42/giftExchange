@@ -75,6 +75,16 @@ if ($rawResult -> num_rows == 0){
 		<dt>Danger</dt>
 		<dd>These settings can have potentially frusterating or disaterous effects, such as deleting your account, or clearing all of your items. These are irreversible!</dd>
 		</dl>
+		<!--toast-->
+			<div class="toast">
+				<div class="toast-header">
+					Profile Picture is alreay at the default!
+				</div>
+				<div class="toast-body">
+					Your profile picture is alreay the default image! Do not try to reset it when it is the default!
+				</div>
+			</div>
+			<!---end-->
 		</div>
 		
 		<div class="tab-pane container fade" id="profile">
@@ -104,15 +114,57 @@ if ($rawResult -> num_rows == 0){
 		
 		<h2>Profile Picture</h2>
 			<div class="card">
-				<div class="card-body">
-					<h4 class="card-title">Current Profile Picture</h4>
+				<div class="card-body p-3">
+					<h4 class="card-title">Current Profile Picture:</h4>
 					<?php if($result["picture"] == "img/default.png"){
-						echo "<p class='card-text text-dark'>(Default) </p>";
+						echo "<p class='card-text text-dark mx-auto'>(Default) </p>";
 						}?>
 				</div>
-				<img class="card-img-bottom img-fluid img-thumbnail" src=<?php echo $result["picture"]?> alt="Profile image" style="max-width: 200px; max-height: 200px">
+				<img class="card-img-bottom img-fluid img-thumbnail mx-auto" src=<?php echo $result["picture"]?> alt="Profile image" style="max-width: 200px; max-height: 200px">
+				<button class="btn btn-danger" type="button" data-toggle="modal" data-target="#imgReset" title="Reset Profile Picture">Reset</button>
 			</div>
-			<h3>Upload</h3>
+			
+			<!--start of modal-->
+			<div class="modal" id="imgReset">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						
+						<div class="modal-header">
+							<h4 class="modal-title">Reset Profile Picture</h4>
+						</div>
+						
+						<div class="modal-body">
+							<p>Are you sure you would like to reset your profile picture? This will delete your current image, and set your profile picture back to the default. You can always upload a new profile picture after this.</p>
+						</div>
+						
+						<div class="modal-footer">
+							<button type="button" class="btn btn-muted border border-dark" data-dismiss="modal">Cancel</button>
+							<form method="post">
+							<button type="submit" name="resetImg" id="resetImg" class="btn btn-danger">Reset Image</button>
+							</form>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<!--end of modal-->
+			<?php
+			if(isset($_POST['resetImg'])){
+				if($result["picture"] == "img/default.png"){
+					echo "<script>$('.toast').toast({delay: 7000});$('.toast').toast('show');</script>";
+				}else{
+				unlink($result["picture"]);//deletes file
+				$prepare = $conn->prepare("UPDATE login SET picture = 'img/default.png' WHERE username = ?");
+				$prepare->bind_param("s", $_SESSION["logged"]);
+				$prepare->execute();
+				$prepare->close();
+				$conn->close();
+				echo "<script>location.replace('/util/shortstop.php')</script>";
+				}
+			}
+			?>
+			
+			<h3 class="mt-5">Upload</h3>
 		<p class="text-dark">You may upload a new profile picture here. Make sure it is a square, and is less than 5 KB. It should also be a PNG format.</p>
 		<form class="form-group" method="post" enctype="multipart/form-data">
 			<div class="input-group">
@@ -128,10 +180,58 @@ if ($rawResult -> num_rows == 0){
 				</div>
 			</div>
 		</form>
-		
 		</div>
 		
-		<div class="tab-pane container fade" id="account"></div>
+		<div class="tab-pane container fade" id="account">
+		<h4>Account Settings</h4>
+		<p class="text-dark">Change settings which have to do with your account here.</p>
+		<h3>Password</h3>
+		<p class="text-dark">Change your password here.</p>
+		
+		<form method="post" class="bg-dark text-primary p-3" name="update">
+			<div class="form-group">
+				<label for="current-box">Current Password:</label>
+				<input type="password" class="form-control" placeholder="Enter your current password for security" name="current-box" id="current-box" minlength="5" maxlength="20"  required>
+			</div>
+			<div class="form-group">
+				<label for="new-box">New Password:</label>
+				<input type="password" class="form-control" placeholder="Enter your new password" name="new-box" id="new-box" minlength="5" maxlength="20"  required>
+			</div>
+			<div class="form-group">
+				<label for="confirm-box">Confirm Password:</label>
+				<input type="password" onkeyup="testPassword()" class="form-control" placeholder="Confirm your new password" name="confirm-box" id="confirm-box" minlength="5" maxlength="20"  required>
+			</div>
+			<button type="submit" class="btn btn-primary" name="updatePassword">Submit</button>
+			<p class="text-danger" id="errorTxt"></p>
+		</form>
+		<?php 
+		function outputErrorMsg($errorMsg){
+			echo "<div class='alert alert-danger' style='text-align:center;'><b>".$errorMsg."</b> Please try again.</div>";
+		}
+		?>
+		<h3>Birthday</h3>
+		<p class="text-dark">Add or change your birthday here.</p>
+		
+		<div class="card">
+				<div class="card-body p-3">
+					<h4 class="card-title">Current Birthday:</h4>
+					<?php if($result["birthday"] == NULL){
+						echo "<p class='card-text text-dark mx-auto'>No birthday set</p>";
+						}else{
+							echo "<p class='card-text text-dark mx-auto'>".$result['birthday']."</p>";
+							}
+						?>
+				</div>
+			</div>
+			
+			<form class="bg-dark text-primary p-3 mt-3" method="post">
+				<div class="form-group">
+					<label for="date-box">Set Birthday: </label>
+					<input type="date" name="date-box" class="form-control" required>
+				</div>
+				<button class="btn btn-primary" type="submit" name="updateBirthday">Submit</button>
+			</form>	
+		</div>
 		
 		<div class="tab-pane container fade" id="danger"></div>
 		
@@ -151,9 +251,100 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 		$prepInterest->close();
 		echo "<script>location.replace('util/shortstop.php')</script>";
 		}elseif(isset($_POST["upload_submit"])){
-			//handle file upload
-			
+			//image upload
+$allowedExts = array("png");
+$extension = pathinfo($_FILES['file-box']['name'], PATHINFO_EXTENSION);
+$target = "img/uploaded/".basename($_FILES["file-box"]["name"]);
+$continue = 1;
+
+if ((($_FILES["file-box"]["type"] == "image/png")&& ($_FILES["file-box"]["size"] < 20000000)&& in_array($extension, $allowedExts))){
+  if ($_FILES["file-box"]["error"] > 0)
+    {
+    echo "Return Code: " . $_FILES["file-box"]["error"] . "<br />";
+    }
+  else
+    {
+    echo "Upload: " . $_FILES["file-box"]["name"] . "<br />";
+    echo "Type: " . $_FILES["file-box"]["type"] . "<br />";
+
+    if (file_exists("img/uploaded/" . $_FILES["file-box"]["name"])){
+      echo $_FILES["file-box"]["name"] . " already exists. ";
+      $continue = 0;
+      }
+    else{
+      move_uploaded_file($_FILES["file-box"]["tmp_name"], $target );
+      echo "Stored in: " . "img/uploaded/" . $_FILES["file-box"]["name"];
+      $path = "img/uploaded/". $_FILES["file-box"]["name"];
+      }
+    }
+  }
+else
+  {
+  echo "Invalid file";
+  $continue = 0;
+ }
+ 
+ if ($continue){
+	 $prep = $conn->prepare("UPDATE login SET picture = ? WHERE username = ?");
+	 $prep->bind_param("ss",$path, $_SESSION["logged"]);
+	 $prep->execute();
+	 $prep->close();
+	 $conn->close();
+	echo "<script>location.replace('/util/shortstop.php')</script>";
+	 }
+	 }elseif(isset($_POST["updatePassword"])){
+		 $currentPassword = $_POST["current-box"];
+		 $newPassword = $_POST["new-box"];
+		 $confirmPassword = $_POST["confirm-box"];
+		 $currentPassword = trim($currentPassword);
+		 $newPassword = trim($newPassword);
+		 $confirmPassword = trim($confirmPassword);
+		 $updateOk = true;
+		 $errorMsg = "";
+		 //checks
+		 if ($currentPassword == "" || $newPassword ==""|| $confirmPassword == ""){
+			 $updateOk = false;
+			 $errorMsg = "Input may not be blank!";
+			 }
+		if ($currentPassword != $result["password"]){
+			$updateOk = false;
+			$errorMsg = "Current password is incorrect!";
 			}
+		if($newPassword != $confirmPassword){
+			$updateOk = false;
+			$errorMsg = "Passwords do not match!";
+			}
+		 
+		 if($updateOk){
+			 //SQL query
+			 $updatePrep = $conn->prepare("UPDATE login SET password = ? WHERE username = ?");
+			 $updatePrep -> bind_param("ss",$newPassword, $_SESSION["logged"]);
+			 $updatePrep -> execute();
+			 $updatePrep -> close();
+			 $conn -> close();
+			 echo "<script>location.replace('util/shortstop.php');</script>";
+			 }else{
+				 outputErrorMsg($errorMsg);
+				 }
+		 }elseif(isset($_POST["updateBirthday"])){
+			 $birthday = $_POST["date-box"];
+			 $updateOK = true;
+			 $errMsg = "";
+			 //checks
+			 if ($birthday == ""){
+				 $updateOK = false;
+				 }
+			if($updateOK ){
+				//SQL query
+				$datePrep = $conn ->prepare("UPDATE login SET birthday = ? where username = ?");
+				$datePrep -> bind_param("ss",$birthday, $_SESSION["logged"]);
+				$datePrep -> execute();
+				$datePrep -> close();
+				$conn->close();
+				 echo "<script>location.replace('util/shortstop.php');</script>";
+				}//the only way that $updateOK is false is if the user tampers with the DevTools, so I will reward this tampering with absolutely nothing. If the input type is changed, the input will be rejected from the database anyway
+			 }
+	 
 	}//end of $_SERVER if
 ?>
 <style>
@@ -165,10 +356,22 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 	}
 </style>
 <script>
+	//makes sure that the name of the file to be uploaded shows up in the form
 $(".custom-file-input").on("change", function() {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
+
+//this checks that the passwords match
+function testPassword() {
+var password = document.forms["update"]["new-box"].value;
+var confirm = document.forms["update"]["confirm-box"].value;
+if (password != confirm){
+	document.getElementById("errorTxt").innerHTML = "Passwords do not match!";
+}else{
+	document.getElementById("errorTxt").innerHTML = "";
+	}
+}
 </script>
 </body>
 </html>
