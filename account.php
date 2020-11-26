@@ -35,6 +35,9 @@ if ($rawResult -> num_rows == 0){
 	}else{
 		$result = $rawResult -> fetch_assoc();
 		}
+//this is just so we can get the amount of items in the items table
+$selectItemSQL = "SELECT * FROM items WHERE user = '".$_SESSION['logged']."'";
+$rawResult2 = $conn -> query($selectItemSQL);
 ?>
 <div class="container-fluid">
 	<div class="jumbotron text-center mt-2"><h1 class="jumbotron-heading" style="font-family: 'Courier New','Courier','monospace';"><strong>SETTINGS</strong></h1></div>
@@ -215,6 +218,7 @@ if ($rawResult -> num_rows == 0){
 		<div class="card">
 				<div class="card-body p-3">
 					<h4 class="card-title">Current Birthday:</h4>
+					<p class="text-dark">(Format is YYYY/MM/DD)</p>
 					<?php if($result["birthday"] == NULL){
 						echo "<p class='card-text text-dark mx-auto'>No birthday set</p>";
 						}else{
@@ -233,7 +237,81 @@ if ($rawResult -> num_rows == 0){
 			</form>	
 		</div>
 		
-		<div class="tab-pane container fade" id="danger"></div>
+		<div class="tab-pane container fade bg-secondary" id="danger">
+			<div class="pt-3 pb-3">
+			<h4 class="text-danger">Danger!</h4>
+			<p class="text-warning">Be careful when changing these settings!</p>
+			<h3 class="text-danger">Delete Items</h3>
+			<p class="text-warning">This will delete all items entered into the Gift Exchange database! This action is not reverseable!</p>
+			<p class="text-info">You currently have <b><?php echo $rawResult2->num_rows;  ?></b> items.</p>
+			<button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteItems" title="Delete all items">Delete Items</button>
+			<h3 class="text-danger mt-2">Delete Account</h3>
+			<p class="text-warning">This will permanently delete your account and all of your items! This action is not reverseable!</p>
+			<button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteAccount" title="Delete your account">Delete Account</button>
+			</div>
+			<!--start of delete items modal-->
+			<div class="modal" id="deleteItems">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						
+						<div class="modal-header">
+							<h4 class="modal-title">Delete Items</h4>
+						</div>
+						
+						<div class="modal-body">
+							<p>Are you sure you would like to delete all of your items? This action is completely irreverable and permanent. You will always be able to add new items.</p>
+						</div>
+						
+						<div class="modal-footer">
+							<button type="button" class="btn btn-muted border border-dark" data-dismiss="modal">Cancel</button>
+							<form method="post">
+							<button type="submit" name="deleteItems" id="deleteItems" class="btn btn-danger">Delete Items</button>
+							</form>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<!--end of delete items modal-->
+			
+			<!--start of delete account modal-->
+			<div class="modal" id="deleteAccount">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						
+						<div class="modal-header">
+							<h4 class="modal-title">Delete Account</h4>
+						</div>
+						
+						<div class="modal-body">
+							<p>Are you sure you would like to delete your account? All of your items, as well as any other information (such as login information) will be deleted. This action is permenant and irreverable. </p>
+							<p>If you are sure you would like to continue, enter your login information to confirm it is actually you.</p>
+							<form method="post">
+								<div class="form-group">
+									<label for="username-box">Username: </label>
+									<input type="text" class="form-control" placeholder="Enter your username" name="username-box" id="username-box" maxlength="20" minlength="4" required>
+								</div>
+								
+								<div class="form-group">
+								<label for="password-box">Password: </label>
+									<input type="password" class="form-control" placeholder="Enter your password" name="password-box" id="password-box" maxlength="20" required>
+								</div>
+								
+								<button type="submit" name="deleteAccount" id="deleteAccount" class="btn btn-danger">Delete Account</button>
+							</form>
+						</div>
+						
+						<div class="modal-footer">
+							<button type="button" class="btn btn-muted border border-dark" data-dismiss="modal">Cancel</button>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<!--end of delete account modal-->
+				
+		</div>
+		
 		
 		</div>
 		</div><!--end of main content section-->
