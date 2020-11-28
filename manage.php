@@ -61,30 +61,30 @@
 				<h2>Add Items</h2>
 				<p class="text-dark">Add items to your list here.</p>
 				
-				<form method="post" class="bg-dark text-primary p-3 rounded-lg" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>"><!-- this should break any attempted injections-->
+				<form method="post" class="bg-dark text-primary p-3 rounded-lg" autocomplete="off" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>"><!-- this should break any attempted injections-->
 					<div class="form-group">
 						<label for="item-box">Item: </label>
-						<input type="text" class="form-control" maxlength="50" name="item-box" id="item-box" placeholder="The name of the item you would like" required>
+						<input type="text" class="form-control" maxlength="50" name="item-box"  id="item-box" placeholder="The name of the item you would like" required>
 					</div>
 					
 					<div class="form-group">
 						<label for="holiday-box">Holiday: </label>
-						<input type="text" class="form-control" maxlength="20" name="holiday-box" id="holiday-box" placeholder="Which holiday would you like to get this item for?" required>
+						<input type="text" class="form-control" maxlength="20"  name="holiday-box" id="holiday-box" placeholder="Which holiday would you like to get this item for?" required>
 					</div>
 					
 					<div class="form-group">
 						<label for="url-box">URL: </label>
-						<input type="text" class="form-control" maxlength="250" name="url-box" id="url-box" placeholder="The link to the item you would like" required>
+						<input type="text" class="form-control"  maxlength="250" name="url-box" id="url-box" placeholder="The link to the item you would like" required>
 					</div>
 					
 					<div class="form-group">
 						<label for="title-box">Title: </label>
-						<input type="text" class="form-control" maxlength="20" name="title-box" id="title-box" placeholder="How the URL will appear when outputted" required>
+						<input type="text"  class="form-control" maxlength="20" name="title-box" id="title-box" placeholder="How the URL will appear when outputted" required>
 					</div>
 					
 					<div class="form-group">
 						<label for="comment-box">Comment: </label>
-						<input type="text" class="form-control" maxlength="250" name="comment-box" id="comment-box" placeholder="Any comment about the item" required>
+						<input type="text"  class="form-control" maxlength="250" name="comment-box" id="comment-box" placeholder="Any comment about the item" required>
 					</div>
 					<button class="btn btn-primary" type="submit" name="addBtn" id="addBtn">Add Item</button>
 				</form>

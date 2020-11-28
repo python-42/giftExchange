@@ -15,7 +15,7 @@ require "include/head-data.html";
 <body>
 <div class="container bg-dark text-primary p-3 border border-secondary mt-5" id="main">
 	<h1 class="mb-3">Create An Account</h1>
-	<form method="post" name="create" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
+	<form method="post" name="create" autocomplete="off" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
 		<div class="form-group">
 			<label for="username-box">Username: </label>
 			<input type="text" name="username-box" placeholder="Enter A Username" class="form-control" minlength="4" maxlength="20"  onkeyup="checkUsername(this.value)" required>
