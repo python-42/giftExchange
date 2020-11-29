@@ -12,7 +12,7 @@ require "include/head-data.html";
 	die ("<div style='text-align:center;' class='alert alert-danger'><b>Error:</b>File is missing. Error has been logged. Please <a target='_blank' href='https://forms.gle/A3aaKieUBzj4mG1C9' class='alert-link'>notify developer</a> if error persists.  [Error Code: 101]</div>");
 	}
 ?>
-<title>Account</title>
+<title>Account & Settings</title>
 </head>
 <body>
 <?php 
@@ -50,7 +50,6 @@ $rawResult2 = $conn -> query($selectItemSQL);
 	<div class="dropdown-menu bg-dark text-white">
 		<a class="dropdown-item bg-dark text-white" href="lists.php">Lists</a>
 		<a class="dropdown-item bg-dark text-white" href="manage.php">Your List</a>
-		<a class="dropdown-item bg-dark text-white" href="circles.php">Circles</a>
 	</div>
 		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('nav.php')">Announcements</button>
 		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('help.php')">Help</button>
