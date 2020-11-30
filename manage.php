@@ -55,6 +55,19 @@
 				<h2>Manage Your List</h2>
 				<p class="text-dark">Edit your list here. Click the corresponding tabs to either add, edit, or delete items from your list.</p>
 				<h2>Your Current List</h2>
+				<?php
+				$outputSQL = "SELECT * FROM items WHERe user = '".$_SESSION['logged']."'";
+				$outputSelectRaw = $conn->query($outputSQL);
+				if($outputSelectRaw->num_rows > 0){
+					echo  "<div class='card-colums'>";
+					while($outputSelect = $outputSelectRaw -> fetch_assoc()){
+						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputSelect['name']."</h4></div><div class='card-body'><p class='card-text'>Holiday: ".$outputSelect['holiday']."</p><a target='_blank' href='".$outputSelect['url']."' class='card-link'>".$outputSelect['urlTitle']."</a><p class='card-text'>Comment: ".$outputSelect['comment']."</p></div></div>";
+					}
+					echo "</div>";
+					}else{
+						echo "<p class='text-info bg-light border border-danger rounded-sm' style='text-align:center' >You curently have no items!</p>";
+						}
+				?>
 			</div><!--end of Home tab-->
 			
 			<div class="tab-pane container fade" id="add">
