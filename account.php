@@ -420,9 +420,32 @@ else
 				$conn->close();
 				 echo "<script>location.replace('util/shortstop.php');</script>";
 				}//the only way that $updateOK is false is if the user tampers with the DevTools, so I will reward this tampering with absolutely nothing. If the input type is changed, the input will be rejected from the database anyway
-			 }
 	 
-	}//end of $_SERVER if
+	}elseif(isset($_POST["deleteItems"])){
+		$deletePrep = $conn->prepare("DELETE FROM items WHERE user = ?");
+		$deletePrep -> bind_param("s", $_SESSION["logged"]);
+		$deletePrep -> execute();
+		$deletePrep -> close();
+		echo "<script>location.replace('util/shortstop.php')</script>";
+		}elseif(isset($_POST["deleteAccount"])){
+			$deleteUsername = $_POST["username-box"];
+			$deletePswd = $_POST["password-box"];
+			if($deleteUsername == $result["username"] && $deletePswd == $result["password"]){
+				$deletePrep2 = $conn->prepare("DELETE FROM items WHERE user = ?");
+				$deletePrep2 -> bind_param("s", $_SESSION["logged"]);
+				$deletePrep2 -> execute();
+				$deletePrep2 -> close();
+				$destroyPrep = $conn->prepare("DELETE FROM login WHERE username = ?");
+				$destroyPrep->bind_param("s", $_SESSION["logged"]);
+				$destroyPrep -> execute();
+				$destroyPrep->close();
+				$conn->close();
+				echo "<script>location.replace('util/shortstop.php')</script>";
+				}else{
+					echo "<p class='text-danger'>Username or password incorrect. Account deletion failed.</p>";
+					}
+			}
+}//end of $_SERVER if
 ?>
 <style>
 	body{
