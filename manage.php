@@ -59,7 +59,7 @@
 				$outputSQL = "SELECT * FROM items WHERe user = '".$_SESSION['logged']."'";
 				$outputSelectRaw = $conn->query($outputSQL);
 				if($outputSelectRaw->num_rows > 0){
-					echo  "<div class='card-colums'>";
+					echo  "<div class='card-columns'>";
 					while($outputSelect = $outputSelectRaw -> fetch_assoc()){
 						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputSelect['name']."</h4></div><div class='card-body'><p class='card-text'>Holiday: ".$outputSelect['holiday']."</p><a target='_blank' href='".$outputSelect['url']."' class='card-link'>".$outputSelect['urlTitle']."</a><p class='card-text'>Comment: ".$outputSelect['comment']."</p></div></div>";
 					}
