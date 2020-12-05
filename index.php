@@ -25,7 +25,6 @@ require "include/head-data.html";
 	<a class="dropdown-item bg-dark text-white" href="login.php">Login</a>
 	<a class="dropdown-item bg-dark text-white" href="create_account.php">Create Account</a>
 	</div>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('help.php')">Help</button>
 		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('about.php')">About</button>
 	</div>
 	</div>

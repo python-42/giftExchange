@@ -46,7 +46,7 @@ require "include/head-data.html";
 	</div>
 	<div class="col-sm-10 bg-primary">
 	<h1 style="text-align:center;text-decoration:underline;">About Gift Exchange</h1>
-	<p>The following is a brief description of Gift Exchange. If you are looking for the 'Help' page, <a href="help.php" style="color:black;">Click Here</a>.<br>Gift Exchange allows you to connect with friends and family in order to ask for a gift. This way everyone ends up with something that they actually want, and everyone is happy. You can also use Gift Exchange to define more general interests if you want to be surprised by what you recieve.</p>
+	<p>The following is a brief description of Gift Exchange. <br>Gift Exchange allows you to connect with friends and family in order to ask for a gift. This way everyone ends up with something that they actually want, and everyone is happy. You can also use Gift Exchange to define more general interests if you want to be surprised by what you recieve.</p>
 	<!-- finish droning on about the site when it is complete -->
 	</div>
 	</div>

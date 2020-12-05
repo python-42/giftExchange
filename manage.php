@@ -37,7 +37,6 @@
 		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('lists.php')" title="Others Lists">Lists</button>
 		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('nav.php')" title="Announcements and more">Announcements</button>
 		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('account.php')" title="Account Settings">Settings</button>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('help.php')">Help</button>
 		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('about.php?ref=nav.php&ref-title=Navigation')">About</button>
 		</div>
 	</div><!--end of nav-->

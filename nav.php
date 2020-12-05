@@ -30,7 +30,6 @@ require "include/head-data.html";
 		<a class="dropdown-item bg-dark text-white" href="manage.php">Your List</a>
 	</div>
 		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('account.php')" title="Account Settings">Settings</button>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('help.php')">Help</button>
 		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('about.php?ref=nav.php&ref-title=Navigation')">About</button>
 		</div>
 	</div><!--end of nav-->
@@ -41,8 +40,6 @@ require "include/head-data.html";
 		<dd>This is the point of Gift Exchange. Click "Lists" in the sidebar to begin.</dd>
 		<dt>Manage Your Account</dt>
 		<dd>Your can change your account settings, such as your password. You can also add a profile picture, and an interest. It is recommended that you add an interest right away.</dd>
-		<dt>Browse Help</dt>
-		<dd>If you are confused or have a question, you can browse the help page to see an answer to your question. </dd>
 	</dl>
 	<h1>Announcements</h1>
 	<p class="text-dark">Read about recent announcements having to do with Gift Exchange here. </p>
