@@ -72,12 +72,15 @@
 				?>
 				</div><!--end of home div-->
 		<?php
-		$outputTabSQL = "SELECT username FROM login WHERE NOT username ='".$_SESSION['logged']."'";
+		$outputTabSQL = "SELECT username, interest, picture FROM login WHERE NOT username ='".$_SESSION['logged']."'";
 		$outputTabRaw = $conn->query($outputTabSQL);
 		if($outputTabRaw-> num_rows > 0){
 		while($outputTabs = $outputTabRaw->fetch_assoc()){
 			echo "<div class='tab-pane container fade' id='".$outputTabs['username']."'>";
-			echo "<h2>".$outputTabs['username']."</h2>";
+			//media object to intergrate profile pictures
+			echo "<div class='media mt-3'><img src=".$outputTabs['picture']." alt='Profile Picture' class='mr-3 rounded-lg bg bg-light align-self-start' style='width:60px'> <div class='media-body'>";
+			echo "<h1>".$outputTabs['username']."</h1></div></div>";
+			echo "<p>Interest: ".$outputTabs['interest']."<p>";
 			$outputItemSQL = "SELECT * FROM items WHERE user = '".$outputTabs['username']."'";
 			$outputItemRaw = $conn->query($outputItemSQL);
 			if($outputItemRaw->num_rows == 0){
