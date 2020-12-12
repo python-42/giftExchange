@@ -18,7 +18,7 @@ require "include/head-data.html";
 	<form method="post" name="create" autocomplete="off" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
 		<div class="form-group">
 			<label for="username-box">Username: </label>
-			<input type="text" name="username-box" placeholder="Enter A Username" class="form-control" minlength="4" maxlength="20"  onkeyup="checkUsername(this.value)" required>
+			<input type="text" name="username-box" placeholder="Enter A Username" class="form-control" minlength="4" maxlength="20"  required>
 		</div>
 		<div class="form-group">
 			<label for="password-box">Password: </label>
@@ -124,21 +124,33 @@ if ($createOK){
 ?>
 <script>
 //ajax which does a few checks for user convience. Futher checks are preformed using php once data is sent to the server. These checks are all about username
-function checkUsername(temp){
-	if (temp.length > 4){
-		var ajax = new XMLHttpRequest();
-		ajax.open("GET","util/checkusername.php?i="+temp, true);
-		ajax.send();
+/* function checkUsername(temp){
+	console.log("checkUsername called...");
+	console.log(temp);
+	if(temp.length > 3){
+		
+	var ajax = new XMLHttpRequest();
+	var c =1;
 		ajax.onreadystatechange = function(){
-			if (this.readystate == 4 && this.status == 200){
-				console.log(this.responseText);//this is still broken
-				document.getElementById("usernameError").innerHTML = this.responseText;
+			console.log("readystate changed... "+c);
+			c += 1;
+			if (this.readyState == 4 && this.status == 200){
+				console.log("status = 200");
+				var outputText = this.responseText;
+				console.log(outputText);
+				document.getElementById("usernameError").innerHTML = outputText;
 				}
 			}
-		}else{
-			document.getElementById("usernameError").innerHTML = "";
-			}
-	}
+			
+		ajax.open("GET","util/checkusername.php?i=" + temp , true);
+		ajax.send();
+		
+		}//end of if
+	}//end of checkUsername
+this doesnt work, however it is not worth my effort	
+*/
+
+
 //this checks that the passwords match
 function testPassword() {
 var password = document.forms["create"]["password-box"].value;
