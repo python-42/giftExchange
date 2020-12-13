@@ -34,11 +34,15 @@ require "include/head-data.html";
 	<h3>How Does Gift Exchange work?</h3>
 	<p>Gift Exchange is designed to be simple to use.</p>
 	<ol>
-	<li>Create an account by clicking on the 'Account' tab in the navigation and filling out the forms.</li>
-	<li>CONTINUE UPDATING THIS IN CONJUNCTION WITH SITE DEVELOPMENT</li>
+	<li>Create an account by clicking 'Account' then 'Create Account'  in the navigation area and filling out the form.</li>
+	<li>Once you are logged in, go to the 'Settings' page and add an interest, as well as any other information you would like to add.</li>
+	<li>Go to the page labeled 'Your List' to manage your list. You can add, edit, and remove items from your list.</li>
+	<li>Visit the page labeled 'Lists' to view other people's lists and interests.</li>
+	<li>Visit the 'About' page for a few important notes, some random fun facts, and a link to my GitHub repo to see the source code.</li>
+	<li>Contact me if you run into any bugs or have a question, comment or concern.</li>
 	</ol>
 	<h3>A Few Notes...</h3>
-	<p>Please, please remeber to use the breadcrumbs! These will show your path throught the site, with links so that you can return to previous pages. <strong>Pressing your browsers back button can result in your entries being deleted!</strong> Use the breadcrumbs in the lower right hand corner to navigate the site!</p>
+	<p>Please, please remeber to use the breadcrumbs! These will show your path throught the site, with links so that you can return to previous pages. <strong>Pressing your browsers back button can result in your entries being deleted!</strong> Use the navigation section present on every page to navigate!</p>
 	</div>
 	</div>
 </div>
