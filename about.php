@@ -41,7 +41,7 @@ require "include/head-data.html";
 	<div class="col-sm-10 bg-primary">
 	<h1 style="text-align:center;text-decoration:underline;">About Gift Exchange</h1>
 	<p>The following is a brief description of Gift Exchange. <br>Gift Exchange allows you to connect with friends and family in order to ask for a gift. This way everyone ends up with something that they actually want, and everyone is happy. You can also use Gift Exchange to define more general interests if you want to be surprised by what you recieve.</p>
-	<p>I used <a target="_blank" class="text-dark" href="https://www.php.net">PHP</a> for server side scripting. I used the <a target="_blank" class="text-dark" href="https://getbootstrap.com/">Bootstrap 4</a> web library for a responsive website.</p>
+	<p>I used <a target="_blank" class="text-dark" href="https://www.php.net">PHP</a> for server side scripting. I used the <a target="_blank" class="text-dark" href="https://getbootstrap.com/">Bootstrap 4</a> web library for a responsive website. I used <a class="text-dark" target="_blank" href="www.mysql.com">MySQL</a> for the database.</p>
 	</div>
 	</div>
 <style>
