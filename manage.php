@@ -60,7 +60,13 @@
 				if($outputSelectRaw->num_rows > 0){
 					echo  "<div class='card-columns'>";
 					while($outputSelect = $outputSelectRaw -> fetch_assoc()){
-						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputSelect['name']."</h4></div><div class='card-body'><p class='card-text'>Holiday: ".$outputSelect['holiday']."</p><a target='_blank' href='".$outputSelect['url']."' class='card-link'>".$outputSelect['urlTitle']."</a><p class='card-text'>Comment: ".$outputSelect['comment']."</p></div></div>";
+						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputSelect['name']."</h4></div><div class='card-body'><p class='card-text'>Holiday: ".$outputSelect['holiday']."</p><a target='_blank' href='".$outputSelect['url']."' class='card-link'>".$outputSelect['urlTitle']."</a><p class='card-text'>Comment: ".$outputSelect['comment']."</p>";
+						if($outputSelect['private'] == 0){
+							echo "<p class='card-text' id=".$outputSelect['name'].">Visibility: Public</p> ";
+							}else{
+								echo "<p class='card-text text-danger' id=".$outputSelect['name']." >Visibility: Private</p> ";
+								}
+						echo "<button class='btn btn-primary' id=".$outputSelect['name']."|".$outputSelect['user']." onclick='toggleView(this.id)' >Toggle Visibility</button></div></div>";
 					}
 					echo "</div>";
 					}else{
@@ -247,6 +253,25 @@ console.log("Tab shown");
 	console.log("tab is not a string (likely not defined)");
 	}
 });
+
+//this function toggles items as either public or private
+function toggleView(temp) {
+	console.log(temp);
+	var data = temp.split("|");
+	var ajax = new XMLHttpRequest();
+	ajax.open("GET", "util/toggleview.php?item="+encodeURI(data[0])+"&user="+encodeURI(data[1]), true);
+	ajax.send();
+	//AJAX request has been sent. The item in question shoud've been marked as bought
+	console.log("Item changed");	
+	var txtElement = document.getElementById(data[0]);
+	if(txtElement.innerHTML == "Visibility: Public"){
+		txtElement.innerHTML = "Visibility: Private";
+		txtElement.className = "card-text text-danger";
+		}else{
+			txtElement.innerHTML = "Visibility: Public";
+			txtElement.className = "card-text";
+			}
+}
 </script>
 </body>
 </html>

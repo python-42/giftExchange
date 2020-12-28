@@ -27,7 +27,7 @@
 				die ("<div style='text-align:center;' class='alert alert-danger'><b>Error:</b> File is missing. Error has been logged. Please <a target='_blank' href='https://forms.gle/A3aaKieUBzj4mG1C9' class='alert-link'>notify developer</a> if error persists.  [Error Code: 101]</div>");
 			}
 			
-		$selectSQL = "SELECT * FROM items WHERE NOT user= '".$_SESSION['logged']."'";
+		$selectSQL = "SELECT * FROM items WHERE NOT user= '".$_SESSION['logged']."' AND  private = 0";
 		$resultRaw = $conn->query($selectSQL);
 		if($resultRaw ->num_rows == 0){
 			$outputLackOfContent = "No one else has inputted any items!";
@@ -81,7 +81,7 @@
 			echo "<div class='media mt-3'><img src=".$outputTabs['picture']." alt='Profile Picture' class='mr-3 rounded-lg bg bg-light align-self-start' style='width:60px'> <div class='media-body'>";
 			echo "<h1>".$outputTabs['username']."</h1></div></div>";
 			echo "<p>Interest: ".$outputTabs['interest']."<p>";
-			$outputItemSQL = "SELECT * FROM items WHERE user = '".$outputTabs['username']."'";
+			$outputItemSQL = "SELECT * FROM items WHERE user = '".$outputTabs['username']."' AND NOT private=1";
 			$outputItemRaw = $conn->query($outputItemSQL);
 			if($outputItemRaw->num_rows == 0){
 				echo "<p class='text-danger'>This person hasn't added any items to their list!</p>";
