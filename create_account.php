@@ -32,6 +32,7 @@ require "include/head-data.html";
 		<p class="text-danger" id="errorTxt"></p>
 		<button type="submit" class="btn btn-primary">Create Account</button>
 	</form>
+<button type="button" class="btn btn-secondary" onclick="location.assign('index.php')">Return To Home</button>
 </div>
 <style>
 body{

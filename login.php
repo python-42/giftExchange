@@ -28,6 +28,7 @@ require "include/head-data.html";
 	<button type="submit" id="submitBtn" class="btn btn-primary">Login</button>
 	</div>
 	</form>
+	<button type="button" class="btn btn-secondary" onclick="location.assign('index.php')">Return To Home</button>
 	</div>
 <style>
 body{
