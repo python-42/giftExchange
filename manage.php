@@ -62,11 +62,11 @@
 					while($outputSelect = $outputSelectRaw -> fetch_assoc()){
 						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputSelect['name']."</h4></div><div class='card-body'><p class='card-text'>Holiday: ".$outputSelect['holiday']."</p><a target='_blank' href='".$outputSelect['url']."' class='card-link'>".$outputSelect['urlTitle']."</a><p class='card-text'>Comment: ".$outputSelect['comment']."</p>";
 						if($outputSelect['private'] == 0){
-							echo "<p class='card-text' id=".$outputSelect['name'].">Visibility: Public</p> ";
+							echo "<p class='card-text' id=".str_replace(" ", "+",$outputSelect['name']).">Visibility: Public</p> ";
 							}else{
-								echo "<p class='card-text text-danger' id=".$outputSelect['name']." >Visibility: Private</p> ";
+								echo "<p class='card-text text-danger' id=".str_replace(" ", "+",$outputSelect['name'])." >Visibility: Private</p> ";
 								}
-						echo "<button class='btn btn-primary' id=".$outputSelect['name']."|".$outputSelect['user']." onclick='toggleView(this.id)' >Toggle Visibility</button></div></div>";
+						echo "<button class='btn btn-primary' id=".str_replace(" ", "+",$outputSelect['name'])."|".$outputSelect['user']." onclick='toggleView(this.id)' >Toggle Visibility</button></div></div>";
 					}
 					echo "</div>";
 					}else{
@@ -257,11 +257,14 @@ console.log("Tab shown");
 //this function toggles items as either public or private
 function toggleView(temp) {
 	console.log(temp);
+	temp = temp.replace("+", " ");
+	console.log(temp);
 	var data = temp.split("|");
 	var ajax = new XMLHttpRequest();
 	ajax.open("GET", "util/toggleview.php?item="+encodeURI(data[0])+"&user="+encodeURI(data[1]), true);
 	ajax.send();
 	//AJAX request has been sent. The item in question shoud've been marked as bought
+	data[0] = data[0].replace(" ", "+");
 	console.log("Item changed");	
 	var txtElement = document.getElementById(data[0]);
 	if(txtElement.innerHTML == "Visibility: Public"){
