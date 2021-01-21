@@ -141,6 +141,7 @@
 				$create["url"] = $_POST["url-box"];
 				$create["title"] = $_POST["title-box"];
 				$create["comment"] = $_POST["comment-box"];
+				$create["item"] = str_replace("+", "", $create["item"]);
 				//validates input
 				if (in_array("", $create)){
 					error_log("Input was blank for a required form. Page = manage.php Form = add item form. User = ".$_SERVER["REMOTE_HOST"]." , ".$_SERVER["REMOTE_ADDR"]);
