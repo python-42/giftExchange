@@ -16,6 +16,7 @@ require "include/head-data.html";
 <div class="container-fluid bg-dark pt-2">
 	<div class="jumbotron text-danger border border-primary"><h1 class="jumbotron-heading">GIFT EXCHANGE</h1></div>
 	<div class="row">
+		<!--nav start-->
 	<div class="col-sm-2 pb-3 bg-secondary">
 	<h2>Navigation</h2>
 	<div class="btn-group-vertical btn-block">
@@ -28,6 +29,7 @@ require "include/head-data.html";
 		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('about.php')">About</button>
 	</div>
 	</div>
+	<!--nav end-->
 	<div class="col-sm-10 bg-primary text-body">
 	<h1>Welcome to Gift Exchange!</h1>
 	<p>Gift Exchange is a website which allows you to connect with your friends and family. You can ask for a gift, and give others gifts. Gift exchange takes the guesswork out of giving, making sure that at the end of the day, everyone is happy.</p>
