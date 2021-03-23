@@ -1,5 +1,5 @@
 <?php
-require "/var/www/giftExchange/include/sql.php";
+require $_SERVER["DOCUMENT_ROOT"]."/include/sql.php";
 
 $item = $_REQUEST["item"];
 $owner = $_REQUEST["owner"];
