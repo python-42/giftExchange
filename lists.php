@@ -88,7 +88,7 @@
 				}else{
 					echo "<div class='card-columns'>";
 					while($outputItem = $outputItemRaw -> fetch_assoc()){
-						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputItem['name']."</h4></div><div class='card-body'><a target='_blank' href='".$outputItem['url']."' class='card-link'>".$outputItem['urlTitle']."</a><p class='card-text'>Holiday: ".$outputItem['holiday']."</p><p class='card-text'>Comment: ".$outputItem['comment']."</p>";
+						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputItem['name']."</h4></div><div class='card-body'><a target='_blank' href='".$outputItem['url']."' class='card-link'>".$outputItem['urlTitle']."</a><p class='card-text'>Comment: ".$outputItem['comment']."</p>";
 						if( $outputItem['bought'] == null ){
 							echo "<p class='card-text' id=".$outputItem['name'].">This item has not been bought</p>";
 							echo "<button class='btn btn-primary' id=".$outputItem['name']."|".$outputItem['user']." onclick='markBought(this.id)' >Mark Item As Bought</button>";

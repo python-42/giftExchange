@@ -60,7 +60,7 @@
 				if($outputSelectRaw->num_rows > 0){
 					echo  "<div class='card-columns'>";
 					while($outputSelect = $outputSelectRaw -> fetch_assoc()){
-						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputSelect['name']."</h4></div><div class='card-body'><p class='card-text'>Holiday: ".$outputSelect['holiday']."</p><a target='_blank' href='".$outputSelect['url']."' class='card-link'>".$outputSelect['urlTitle']."</a><p class='card-text'>Comment: ".$outputSelect['comment']."</p>";
+						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputSelect['name']."</h4></div><div class='card-body'><a target='_blank' href='".$outputSelect['url']."' class='card-link'>".$outputSelect['urlTitle']."</a><p class='card-text'>Comment: ".$outputSelect['comment']."</p>";
 						if($outputSelect['private'] == 0){
 							echo "<p class='card-text' id=".str_replace(" ", "+",$outputSelect['name']).">Visibility: Public</p> ";
 							}else{
@@ -83,11 +83,6 @@
 					<div class="form-group">
 						<label for="item-box">Item: </label>
 						<input type="text" class="form-control" maxlength="50" name="item-box"  id="item-box" placeholder="The name of the item you would like" required>
-					</div>
-					
-					<div class="form-group">
-						<label for="holiday-box">Holiday: </label>
-						<input type="text" class="form-control" maxlength="20"  name="holiday-box" id="holiday-box" placeholder="Which holiday would you like to get this item for?" required>
 					</div>
 					
 					<div class="form-group">
@@ -137,7 +132,6 @@
 			if(isset($_POST["addBtn"])){
 				//gets inputs
 				$create["item"] = $_POST["item-box"];
-				$create["holiday"] = $_POST["holiday-box"];
 				$create["url"] = $_POST["url-box"];
 				$create["title"] = $_POST["title-box"];
 				$create["comment"] = $_POST["comment-box"];
@@ -146,8 +140,8 @@
 				if (in_array("", $create)){
 					error_log("Input was blank for a required form. Page = manage.php Form = add item form. User = ".$_SERVER["REMOTE_HOST"]." , ".$_SERVER["REMOTE_ADDR"]);
 					}else{
-						$createPrep = $conn->prepare("INSERT INTO items (user, name, url, holiday, comment, urlTitle) VALUES (?, ?, ?, ?, ?, ? )");
-						$createPrep -> bind_param("ssssss", $_SESSION["logged"], $create["item"], $create["url"], $create["holiday"], $create["comment"], $create["title"]);
+						$createPrep = $conn->prepare("INSERT INTO items (user, name, url, comment, urlTitle) VALUES (?, ?, ?, ?, ? )");
+						$createPrep -> bind_param("sssss", $_SESSION["logged"], $create["item"], $create["url"], $create["comment"], $create["title"]);
 						$createPrep ->execute();
 						$createPrep->close();
 						
@@ -157,7 +151,6 @@
 				}elseif(isset($_POST["editBtn"])){
 					//gets inputs
 				$edit["item"] = $_POST["item-edit-box"];
-				$edit["holiday"] = $_POST["holiday-edit-box"];
 				$edit["url"] = $_POST["url-edit-box"];
 				$edit["title"] = $_POST["title-edit-box"];
 				$edit["comment"] = $_POST["comment-edit-box"];
@@ -165,8 +158,8 @@
 				if (in_array("", $edit)){
 					error_log("Input was blank for a required form. Page = manage.php Form = edit item form. User = ".$_SERVER["REMOTE_HOST"]." , ".$_SERVER["REMOTE_ADDR"]);
 					}else{
-						$editPrep = $conn->prepare("UPDATE items SET name = ? , url = ? , holiday = ? , comment =? , urlTitle = ? WHERE user = ? AND name = ?");
-						$editPrep -> bind_param("sssssss",  $edit["item"], $edit["url"], $edit["holiday"], $edit["comment"], $edit["title"], $_SESSION["logged"], $_SESSION["old-item"]);
+						$editPrep = $conn->prepare("UPDATE items SET name = ? , url = ? , comment =? , urlTitle = ? WHERE user = ? AND name = ?");
+						$editPrep -> bind_param("ssssss",  $edit["item"], $edit["url"], $edit["comment"], $edit["title"], $_SESSION["logged"], $_SESSION["old-item"]);
 						$editPrep ->execute();
 						$editPrep->close();
 						echo "<script>location.replace('util/shortstop.php')</script>";
@@ -196,7 +189,7 @@
 									$_SESSION["tab"] = "#edit";
 									$_SESSION["old-item"] = $which;
 									$editResult = $editRawResult->fetch_assoc();
-									echo "<form method='post' class='bg-dark text-primary p-3 rounded-lg' autocomplete='off' action='".htmlspecialchars($_SERVER['PHP_SELF']) ."'><div class='form-group'><label for='item-edit-box'>Item: </label><input type='text' class='form-control' maxlength='50' name='item-edit-box'  id='item-edit-box' value='".$editResult['name']."' required></div><div class='form-group'><label for='holiday-edit-box'>Holiday: </label><input type='text' class='form-control' maxlength='20'  name='holiday-edit-box' id='holiday-edit-box' value='".$editResult['holiday']."' required></div><div class='form-group'><label for='url-edit-box'>URL: </label><input type='text' class='form-control'  maxlength='250' name='url-edit-box' id='url-edit-box' value='".$editResult['url']."' required></div><div class='form-group'><label for='title-edit-box'>Title: </label><input type='text'  class='form-control' maxlength='20' name='title-edit-box' id='title-edit-box' value='".$editResult['urlTitle']."' required></div><div class='form-group'><label for='comment-edit-box'>Comment: </label><input type='text'  class='form-control' maxlength='250' name='comment-edit-box' id='comment-edit-box' value='".$editResult['comment']."' required></div><button class='btn btn-primary' type='submit' name='editBtn' id='editBtn'>Edit Item</button></form>";
+									echo "<form method='post' class='bg-dark text-primary p-3 rounded-lg' autocomplete='off' action='".htmlspecialchars($_SERVER['PHP_SELF']) ."'><div class='form-group'><label for='item-edit-box'>Item: </label><input type='text' class='form-control' maxlength='50' name='item-edit-box'  id='item-edit-box' value='".$editResult['name']."' required></div><div class='form-group'><label for='url-edit-box'>URL: </label><input type='text' class='form-control'  maxlength='250' name='url-edit-box' id='url-edit-box' value='".$editResult['url']."' required></div><div class='form-group'><label for='title-edit-box'>Title: </label><input type='text'  class='form-control' maxlength='20' name='title-edit-box' id='title-edit-box' value='".$editResult['urlTitle']."' required></div><div class='form-group'><label for='comment-edit-box'>Comment: </label><input type='text'  class='form-control' maxlength='250' name='comment-edit-box' id='comment-edit-box' value='".$editResult['comment']."' required></div><button class='btn btn-primary' type='submit' name='editBtn' id='editBtn'>Edit Item</button></form>";
 									}
 								}
 							}//end of elseif's
