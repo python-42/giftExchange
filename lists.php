@@ -90,8 +90,8 @@
 					while($outputItem = $outputItemRaw -> fetch_assoc()){
 						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputItem['name']."</h4></div><div class='card-body'><a target='_blank' href='".$outputItem['url']."' class='card-link'>".$outputItem['urlTitle']."</a><p class='card-text'>Comment: ".$outputItem['comment']."</p>";
 						if( $outputItem['bought'] == null ){
-							echo "<p class='card-text' id=".$outputItem['name'].">This item has not been bought</p>";
-							echo "<button class='btn btn-primary' id=".$outputItem['name']."|".$outputItem['user']." onclick='markBought(this.id)' >Mark Item As Bought</button>";
+							echo "<p class='card-text' id=".str_replace(" ", "+",$outputItem['name']).">This item has not been bought</p>";
+							echo "<button class='btn btn-primary' id=".str_replace(" ", "+",$outputItem['name'])."|".$outputItem['user']." onclick='markBought(this.id)' >Mark Item As Bought</button>";
 						}else{
 							echo "<p class='card-text text-danger'>This item has been bought</p> ";
 							}
@@ -123,12 +123,16 @@ var user = "<?php echo $_SESSION["logged"]; ?>";
 console.log(user);
 function markBought(temp) {
 	console.log(temp);
-	var data = temp.split("|");
+	formatted = temp.replace("+", " ");
+	console.log(formatted);
+	var data = formatted.split("|");
+	console.log(data);
 	var ajax = new XMLHttpRequest();
 	ajax.open("GET", "util/markbought.php?item="+encodeURI(data[0])+"&owner="+encodeURI(data[1])+"&user="+encodeURI(user), true);
 	ajax.send();
 	//AJAX request has been sent. The item in question shoud've been marked as bought
 	console.log("Item marked as bought");
+	data[0] = data[0].replace(" ","+");
 	document.getElementById(data[0]).innerHTML = "You just marked this item as bought!";
 	document.getElementById(data[0]).className = "card-text text-danger";
 	var toBeRm = document.getElementById(temp);
