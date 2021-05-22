@@ -11,6 +11,13 @@ require "include/head-data.html";
 	error_log("Eror Code 101: include/head_data.html is missing!");
 	die ("<div style='text-align:center;' class='alert alert-danger'><b>Error:</b>File is missing. Error has been logged. Please <a target='_blank' href='https://forms.gle/A3aaKieUBzj4mG1C9' class='alert-link'>notify developer</a> if error persists.  [Error Code: 101]</div>");
 	}
+
+if (file_exists("util/nav-block.php")){
+	require "util/nav-block.php";
+	}else{
+		error_log("Eror Code 101: util/nav-block.php is missing![index.php]");
+		die ("<div style='text-align:center;' class='alert alert-danger'><b>Error:</b>File is missing. Error has been logged. Please <a target='_blank' href='https://forms.gle/A3aaKieUBzj4mG1C9' class='alert-link'>notify developer</a> if error persists.  [Error Code: 101]</div>");
+	}
 ?>
 <title>Account & Settings</title>
 </head>
@@ -42,19 +49,10 @@ $rawResult2 = $conn -> query($selectItemSQL);
 <div class="container-fluid">
 	<div class="jumbotron text-center mt-2"><h1 class="jumbotron-heading" style="font-family: 'Courier New','Courier','monospace';"><strong>SETTINGS</strong></h1></div>
 	<div class="row">
-		<div class="col-sm-2 pb-3 bg-secondary">
-	<h2>Navigation</h2>
-	<div class="btn-group-vertical btn-block">
-		<button type="button" class="btn btn-primary btn-block active border border-body">Settings</button>
-		<button type="button" class="btn dropdown-toggle bg-white btn-block border border-body" data-toggle="dropdown">Lists</button>
-	<div class="dropdown-menu bg-dark text-white">
-		<a class="dropdown-item bg-dark text-white" href="lists.php">Lists</a>
-		<a class="dropdown-item bg-dark text-white" href="manage.php">Your List</a>
-	</div>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('nav.php')">Announcements</button>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('about.php')">About</button>
-		</div>
-	</div><!--end of nav-->
+	<?php
+	nav("active+account", 0, 0, "shown+lists", 0, "shown+manage", "shown+nav", "shown+notes");
+	?>
+		<!--end of nav-->
 	
 	<div class="col-sm-10 bg-primary pt-3">
 		<ul class="nav nav-tabs bg-white border border-dark">

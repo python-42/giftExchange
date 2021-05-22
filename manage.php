@@ -10,6 +10,13 @@
 					error_log("Eror Code 101: include/head_data.html is missing![create_account.php]");
 					die ("<b>Error:</b>File is missing. Error has been logged. Please <a target='_blank' href='https://forms.gle/A3aaKieUBzj4mG1C9'>notify developer</a> if error persists.  [Error Code: 101]</div>");
 					}
+					
+			if (file_exists("util/nav-block.php")){
+				require "util/nav-block.php";
+			}else{
+				error_log("Eror Code 101: util/nav-block.php is missing![index.php]");
+				die ("<div style='text-align:center;' class='alert alert-danger'><b>Error:</b>File is missing. Error has been logged. Please <a target='_blank' href='https://forms.gle/A3aaKieUBzj4mG1C9' class='alert-link'>notify developer</a> if error persists.  [Error Code: 101]</div>");
+				}
 				?>
 	</head>
 	<body>
@@ -30,16 +37,9 @@
 		<div class="container-fluid">
 			<div class="jumbotron text-center m-2"><h1 class="jumbotron-heading" style="font-family: 'Courier New','Courier','monospace';">Your List</h1></div>
 			<div class="row">
-	<div class="col-sm-2 pb-3 bg-secondary">
-	<h2>Navigation</h2>
-	<div class="btn-group-vertical btn-block">
-		<button type="button" class="btn btn-primary btn-block active border border-body">Your List</button>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('lists.php')" title="Others Lists">Lists</button>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('nav.php')" title="Announcements and more">Announcements</button>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('account.php')" title="Account Settings">Settings</button>
-		<button type="button" class="btn bg-white btn-block border border-body" onclick="location.assign('about.php?ref=nav.php&ref-title=Navigation')">About</button>
-		</div>
-	</div><!--end of nav-->
+			<?php
+			nav("shown+account", 0, 0, "shown+lists", 0, "active+manage", "shown+nav", "shown+notes");
+			?>
 	<div class="col-sm-10 bg-primary">
 		
 		<ul class="nav nav-tabs bg-white border border-dark">
