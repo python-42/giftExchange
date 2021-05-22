@@ -1,9 +1,9 @@
 <?php
 //9 args
-function nav($about, $account, $create, $index, $lists, $login, $manage, $nav, $notes){
+function nav($account, $create, $index, $lists, $login, $manage, $nav, $notes){
 	echo "<div class='col-sm-2 pb-3 bg-secondary'><h2>Navigation</h2><div class='btn-group-vertical btn-block'>";
 	
-	$which = array($about, $account, $create, $index, $lists, $login, $manage, $nav, $notes);
+	$which = array($account, $create, $index, $lists, $login, $manage, $nav, $notes);
 	foreach ($which as $page){
 		$page = explode("+", $page);
 		if($page[0] == "active"){
@@ -28,5 +28,5 @@ function nav($about, $account, $create, $index, $lists, $login, $manage, $nav, $
 }//function end
 	
 //pass args like: [status]+[name] status is either active or shown. Whatever can be passed for the rest, pass 0 for uniformity and ease
-//example: nav("active+About", "shown+Account", "shown+Create", 0 ,0 ,0 ,0 ,0, 0);
+//example: nav("active+Account", "shown+Create", 0 ,0 ,0 ,0 ,0, 0);
 ?>
