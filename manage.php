@@ -1,9 +1,10 @@
 <?php session_start(); ?>
 <!DOCTYPE=html>
-<html lang="en">
-	<head>
-		<title>Manage Your List</title>
-			<?php
+    <html lang="en">
+
+    <head>
+        <title>Manage Your List</title>
+        <?php
 			if (file_exists("include/head-data.html")){
 				require "include/head-data.html";
 				}else{
@@ -18,9 +19,10 @@
 				die ("<div style='text-align:center;' class='alert alert-danger'><b>Error:</b>File is missing. Error has been logged. Please <a target='_blank' href='https://forms.gle/A3aaKieUBzj4mG1C9' class='alert-link'>notify developer</a> if error persists.  [Error Code: 101]</div>");
 				}
 				?>
-	</head>
-	<body>
-		<?php
+    </head>
+
+    <body>
+        <?php
 		//checks to make sure user is logged in
 					if(!isset($_SESSION["logged"])){
 						echo "<script>location.replace('login.php?nl=true')</script>";
@@ -34,27 +36,30 @@
 				die ("<div style='text-align:center;' class='alert alert-danger'><b>Error:</b> File is missing. Error has been logged. Please <a target='_blank' href='https://forms.gle/A3aaKieUBzj4mG1C9' class='alert-link'>notify developer</a> if error persists.  [Error Code: 101]</div>");
 			}
 		?>
-		<div class="container-fluid">
-			<div class="jumbotron text-center m-2"><h1 class="jumbotron-heading" style="font-family: 'Courier New','Courier','monospace';">Your List</h1></div>
-			<div class="row">
-			<?php
+        <div class="container-fluid">
+            <div class="jumbotron text-center m-2">
+                <h1 class="jumbotron-heading" style="font-family: 'Courier New','Courier','monospace';">Your List</h1>
+            </div>
+            <div class="row">
+                <?php
 			nav("shown+account", 0, 0, "shown+lists", 0, "active+manage", "shown+nav", "shown+notes");
 			?>
-	<div class="col-sm-10 bg-primary">
-		
-		<ul class="nav nav-tabs bg-white border border-dark">
-		<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">Home</a></li>
-		<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#add">Add Items</a></li>
-		<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#edit">Edit Items</a></li>
-		<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#remove">Remove Items</a></li>
-		</ul>
-		
-		<div class="tab-content">
-			<div class="tab-pane container active" id="home">
-				<h2>Manage Your List</h2>
-				<p class="text-dark">Edit your list here. Click the corresponding tabs to either add, edit, or delete items from your list.</p>
-				<h2>Your Current List</h2>
-				<?php
+                <div class="col-sm-10 bg-primary">
+
+                    <ul class="nav nav-tabs bg-white border border-dark">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#add">Add Items</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#edit">Edit Items</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#remove">Remove Items</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane container active" id="home">
+                            <h2>Manage Your List</h2>
+                            <p class="text-dark">Edit your list here. Click the corresponding tabs to either add, edit,
+                                or delete items from your list.</p>
+                            <h2>Your Current List</h2>
+                            <?php
 				$outputSQL = "SELECT * FROM items WHERe user = '".$_SESSION['logged']."'";
 				$outputSelectRaw = $conn->query($outputSQL);
 				if($outputSelectRaw->num_rows > 0){
@@ -73,45 +78,56 @@
 						echo "<p class='text-info bg-light border border-danger rounded-sm' style='text-align:center' >You curently have no items!</p>";
 						}
 				?>
-			</div><!--end of Home tab-->
-			
-			<div class="tab-pane container fade" id="add">
-				<h2>Add Items</h2>
-				<p class="text-dark">Add items to your list here.</p>
-				
-				<form method="post" class="bg-dark text-primary p-3 rounded-lg" autocomplete="off" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>"><!-- this should break any attempted injections-->
-					<div class="form-group">
-						<label for="item-box">Item: </label>
-						<input type="text" class="form-control" maxlength="50" name="item-box"  id="item-box" placeholder="The name of the item you would like" required>
-					</div>
-					
-					<div class="form-group">
-						<label for="url-box">URL: </label>
-						<input type="text" class="form-control"  maxlength="250" name="url-box" id="url-box" placeholder="The link to the item you would like" required>
-					</div>
-					
-					<div class="form-group">
-						<label for="title-box">Title: </label>
-						<input type="text"  class="form-control" maxlength="20" name="title-box" id="title-box" placeholder="How the URL will appear when outputted" required>
-					</div>
-					
-					<div class="form-group">
-						<label for="comment-box">Comment: </label>
-						<input type="text"  class="form-control" maxlength="250" name="comment-box" id="comment-box" placeholder="Any comment about the item" required>
-					</div>
-					<button class="btn btn-primary" type="submit" name="addBtn" id="addBtn">Add Item</button>
-				</form>
-				
-			</div><!--end of Add tab-->
-			
-			<div class="tab-pane container fade" id="edit">
-				<h2>Edit Items</h2>
-				<p class="text-dark">Edit items which are already on your list here.</p>
-				<form method="post" class="bg-dark text-primary p-3 rounded-lg" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>"><!-- this should break any attempted injections-->
-				<div class="form-group">
-					<label for="which-box">Select which item you would like to edit:</label>
-					<select name="which-box" class="custom-select form-control">
-						<?php
+                        </div>
+                        <!--end of Home tab-->
+
+                        <div class="tab-pane container fade" id="add">
+                            <h2>Add Items</h2>
+                            <p class="text-dark">Add items to your list here.</p>
+
+                            <form method="post" class="bg-dark text-primary p-3 rounded-lg" autocomplete="off"
+                                action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
+                                <!-- this should break any attempted injections-->
+                                <div class="form-group">
+                                    <label for="item-box">Item: </label>
+                                    <input type="text" class="form-control" maxlength="50" name="item-box" id="item-box"
+                                        placeholder="The name of the item you would like" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="url-box">URL: </label>
+                                    <input type="text" class="form-control" maxlength="250" name="url-box" id="url-box"
+                                        placeholder="The link to the item you would like" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="title-box">Title: </label>
+                                    <input type="text" class="form-control" maxlength="20" name="title-box"
+                                        id="title-box" placeholder="How the URL will appear when outputted" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="comment-box">Comment: </label>
+                                    <input type="text" class="form-control" maxlength="250" name="comment-box"
+                                        id="comment-box" placeholder="Any comment about the item" required>
+                                </div>
+                                <button class="btn btn-primary" type="submit" name="addBtn" id="addBtn">Add
+                                    Item</button>
+                            </form>
+
+                        </div>
+                        <!--end of Add tab-->
+
+                        <div class="tab-pane container fade" id="edit">
+                            <h2>Edit Items</h2>
+                            <p class="text-dark">Edit items which are already on your list here.</p>
+                            <form method="post" class="bg-dark text-primary p-3 rounded-lg"
+                                action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
+                                <!-- this should break any attempted injections-->
+                                <div class="form-group">
+                                    <label for="which-box">Select which item you would like to edit:</label>
+                                    <select name="which-box" class="custom-select form-control">
+                                        <?php
 					$editOptionSelect = "SELECT name FROM items WHERE user = '".$_SESSION["logged"]."'";
 					$editOptionResultRaw = $conn->query($editOptionSelect);
 					if($editOptionResultRaw->num_rows > 0){
@@ -119,14 +135,15 @@
 							echo "<option>".$editOptionResult['name']."</option>";
 							}
 					}else{
-						echo "<option selected value='none'>There aren't any items on your list! And items in the tab labeled 'Add Items'!</option>";
+						echo "<option selected value='none'>There aren't any items on your list! Add items in the tab labeled 'Add Items'!</option>";
 						}
 					?>
-					</select>
-				</div>
-				<button type="submit" class="btn btn-primary" name="editSelectBtn" id="editSelectBtn">Next</button>
-				</form>
-				<?php
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary" name="editSelectBtn"
+                                    id="editSelectBtn">Next</button>
+                            </form>
+                            <?php
 				if($_SERVER["REQUEST_METHOD"] == "POST"){
 			//checks which form was submitted
 			if(isset($_POST["addBtn"])){
@@ -199,17 +216,20 @@
 				echo "<script>var tab =\"".$_SESSION['tab']."\"</script>";
 				$_SESSION["tab"] = "#home";
 			}
-		?>	
-			</div><!--end of Edit tab-->
-			
-			<div class="tab-pane container fade" id="remove">
-				<h2>Remove Items</h2>
-				<p class="text-dark">Remove items from your list here.</p>
-				<form method="post" class="bg-dark text-primary p-3 rounded-lg" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>"><!-- this should break any attempted injections-->
-			<div class="form-group">
-				<label for="rm-box">Select the item you would like to remove: </label>
-				<select name="rm-box" class="custom-select form-control">
-					<?php
+		?>
+                        </div>
+                        <!--end of Edit tab-->
+
+                        <div class="tab-pane container fade" id="remove">
+                            <h2>Remove Items</h2>
+                            <p class="text-dark">Remove items from your list here.</p>
+                            <form method="post" class="bg-dark text-primary p-3 rounded-lg"
+                                action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
+                                <!-- this should break any attempted injections-->
+                                <div class="form-group">
+                                    <label for="rm-box">Select the item you would like to remove: </label>
+                                    <select name="rm-box" class="custom-select form-control">
+                                        <?php
 					$rmSelect = "SELECT name FROM items WHERE user = '".$_SESSION["logged"]."'";
 					$rmResultRaw = $conn->query($rmSelect);
 					if($rmResultRaw->num_rows > 0){
@@ -217,58 +237,67 @@
 							echo "<option>".$rmResult['name']."</option>";
 							}
 					}else{
-						echo "<option selected>There aren't any items on your list! And items in the tab labeled 'Add Items'!</option>";
+						echo "<option selected>There aren't any items on your list! Add items in the tab labeled 'Add Items'!</option>";
 						}
 					?>
-				</select>
-			</div>
-			<button type="submit" class="btn btn-primary" name="rmBtn" id="rmBtn">Remove Item</button>
-			</form>
-			</div><!--end of Remove tab-->
-		</div>
-		
-	</div><!--end of large content section-->
-	</div><!--end of row-->
-		</div><!--end of .container-fluid-->
-<style>
-	body{
-		background: linear-gradient(to left,#007bff,#6c757d );
-		}
-	@media (min-width: 576px){
-		.jumbotron-heading{font-size:9rem;}
-	}
-</style>
-<script>
-	$(document).ready(function () { 
-	if (typeof(tab) == "string"){
-$(".nav-tabs a[href='"+tab+"'] ").tab("show");
-console.log("Tab shown");
-}else{
-	console.log("tab is not a string (likely not defined)");
-	}
-});
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary" name="rmBtn" id="rmBtn">Remove
+                                    Item</button>
+                            </form>
+                        </div>
+                        <!--end of Remove tab-->
+                    </div>
 
-//this function toggles items as either public or private
-function toggleView(temp) {
-	console.log(temp);
-	temp = temp.replace("+", " ");
-	console.log(temp);
-	var data = temp.split("|");
-	var ajax = new XMLHttpRequest();
-	ajax.open("GET", "util/toggleview.php?item="+encodeURI(data[0])+"&user="+encodeURI(data[1]), true);
-	ajax.send();
-	//AJAX request has been sent. The item in question shoud've been marked as bought
-	data[0] = data[0].replace(" ", "+");
-	console.log("Item changed");	
-	var txtElement = document.getElementById(data[0]);
-	if(txtElement.innerHTML == "Visibility: Public"){
-		txtElement.innerHTML = "Visibility: Private";
-		txtElement.className = "card-text text-danger";
-		}else{
-			txtElement.innerHTML = "Visibility: Public";
-			txtElement.className = "card-text";
-			}
-}
-</script>
-</body>
-</html>
+                </div>
+                <!--end of large content section-->
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of .container-fluid-->
+        <style>
+        body {
+            background: linear-gradient(to left, #007bff, #6c757d);
+        }
+
+        @media (min-width: 576px) {
+            .jumbotron-heading {
+                font-size: 9rem;
+            }
+        }
+        </style>
+        <script>
+        $(document).ready(function() {
+            if (typeof(tab) == "string") {
+                $(".nav-tabs a[href='" + tab + "'] ").tab("show");
+                console.log("Tab shown");
+            } else {
+                console.log("tab is not a string (likely not defined)");
+            }
+        });
+
+        //this function toggles items as either public or private
+        function toggleView(temp) {
+            console.log(temp);
+            temp = temp.replace("+", " ");
+            console.log(temp);
+            var data = temp.split("|");
+            var ajax = new XMLHttpRequest();
+            ajax.open("GET", "util/toggleview.php?item=" + encodeURI(data[0]) + "&user=" + encodeURI(data[1]), true);
+            ajax.send();
+            //AJAX request has been sent. The item in question shoud've been marked as bought
+            data[0] = data[0].replace(" ", "+");
+            console.log("Item changed");
+            var txtElement = document.getElementById(data[0]);
+            if (txtElement.innerHTML == "Visibility: Public") {
+                txtElement.innerHTML = "Visibility: Private";
+                txtElement.className = "card-text text-danger";
+            } else {
+                txtElement.innerHTML = "Visibility: Public";
+                txtElement.className = "card-text";
+            }
+        }
+        </script>
+    </body>
+
+    </html>
