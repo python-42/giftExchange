@@ -1,6 +1,6 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'].'include/sql.php';
+require $_SERVER['DOCUMENT_ROOT'].'/include/sql.php';
 //this page is used in conjuction with ajax to check that the username is ok for account creation
 //sql
 $selectSQL = 'SELECT username FROM login';
