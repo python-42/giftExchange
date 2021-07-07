@@ -56,8 +56,7 @@
                     <div class="tab-content">
                         <div class="tab-pane container active" id="home">
                             <h2>Manage Your List</h2>
-                            <p class="text-dark">Edit your list here. Click the corresponding tabs to either add, edit,
-                                or delete items from your list.</p>
+                            <p class="text-dark">Edit your list here. Click the corresponding tabs to either add, edit, or delete items from your list. <span class="text-danger">*</span>Format is YYYY-MM-DD</p>
                             <h2>Your Current List</h2>
                             <?php
 				$outputSQL = "SELECT * FROM items WHERe user = '".$_SESSION['logged']."'";
@@ -65,7 +64,7 @@
 				if($outputSelectRaw->num_rows > 0){
 					echo  "<div class='card-columns'>";
 					while($outputSelect = $outputSelectRaw -> fetch_assoc()){
-						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputSelect['name']."</h4></div><div class='card-body'><a target='_blank' href='".$outputSelect['url']."' class='card-link'>".$outputSelect['urlTitle']."</a><p class='card-text'>Comment: ".$outputSelect['comment']."</p>";
+						echo "<div class='card'><div class='card-header'><h4 class='card-title'>".$outputSelect['name']."</h4></div><div class='card-body'><a target='_blank' href='".$outputSelect['url']."' class='card-link'>".$outputSelect['urlTitle']."</a><p class='card-text'>Comment: ".$outputSelect['comment']."</p><p class='card-text'>Expires: ".$outputSelect['date']."<span class='text-danger'>*</span></p>";
 						if($outputSelect['private'] == 0){
 							echo "<p class='card-text' id=".str_replace(" ", "+",$outputSelect['name']).">Visibility: Public</p> ";
 							}else{
@@ -111,8 +110,17 @@
                                     <input type="text" class="form-control" maxlength="250" name="comment-box"
                                         id="comment-box" placeholder="Any comment about the item" required>
                                 </div>
-                                <button class="btn btn-primary" type="submit" name="addBtn" id="addBtn">Add
-                                    Item</button>
+
+                                <label for="date-box">Date: </label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control" name="date-box"
+                                        id="date-box" required>
+                                    <div class="input-group-append">
+                                    <button class="btn btn-light border" type="button" data-toggle="popover" title="What is the point of the date field?" data-content="The date field is used to automatically remove bought items after they have already been recieved. In order for this feature to work properly, set the date to when you will recieve the item. If the item is not purchased, it will remain on your list. If you do not want your item to disappear after it is bought, set the date to a date in the past.">�</button>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary mt-2" type="submit" name="addBtn" id="addBtn">Add Item</button>
                             </form>
 
                         </div>
@@ -152,13 +160,14 @@
 				$create["url"] = $_POST["url-box"];
 				$create["title"] = $_POST["title-box"];
 				$create["comment"] = $_POST["comment-box"];
+                $create["date"] = $_POST["date-box"];
 				$create["item"] = str_replace("+", "", $create["item"]);
 				//validates input
 				if (in_array("", $create)){
 					error_log("Input was blank for a required form. Page = manage.php Form = add item form. User = ".$_SERVER["REMOTE_HOST"]." , ".$_SERVER["REMOTE_ADDR"]);
 					}else{
-						$createPrep = $conn->prepare("INSERT INTO items (user, name, url, comment, urlTitle) VALUES (?, ?, ?, ?, ? )");
-						$createPrep -> bind_param("sssss", $_SESSION["logged"], $create["item"], $create["url"], $create["comment"], $create["title"]);
+						$createPrep = $conn->prepare("INSERT INTO items (user, name, url, comment, urlTitle, date) VALUES (?, ?, ?, ?, ?, ? )");
+						$createPrep -> bind_param("ssssss", $_SESSION["logged"], $create["item"], $create["url"], $create["comment"], $create["title"], $create["date"]);
 						$createPrep ->execute();
 						$createPrep->close();
 						
@@ -171,12 +180,13 @@
 				$edit["url"] = $_POST["url-edit-box"];
 				$edit["title"] = $_POST["title-edit-box"];
 				$edit["comment"] = $_POST["comment-edit-box"];
+                $edit["date"] = $_POST["edit-date-box"];
 				//validates input
 				if (in_array("", $edit)){
 					error_log("Input was blank for a required form. Page = manage.php Form = edit item form. User = ".$_SERVER["REMOTE_HOST"]." , ".$_SERVER["REMOTE_ADDR"]);
 					}else{
-						$editPrep = $conn->prepare("UPDATE items SET name = ? , url = ? , comment =? , urlTitle = ? WHERE user = ? AND name = ?");
-						$editPrep -> bind_param("ssssss",  $edit["item"], $edit["url"], $edit["comment"], $edit["title"], $_SESSION["logged"], $_SESSION["old-item"]);
+						$editPrep = $conn->prepare("UPDATE items SET name = ? , url = ? , comment =? , urlTitle = ?, date = ? WHERE user = ? AND name = ?");
+						$editPrep -> bind_param("sssssss",  $edit["item"], $edit["url"], $edit["comment"], $edit["title"], $edit["date"], $_SESSION["logged"], $_SESSION["old-item"]);
 						$editPrep ->execute();
 						$editPrep->close();
 						echo "<script>location.replace('util/shortstop.php')</script>";
@@ -206,7 +216,7 @@
 									$_SESSION["tab"] = "#edit";
 									$_SESSION["old-item"] = $which;
 									$editResult = $editRawResult->fetch_assoc();
-									echo "<form method='post' class='bg-dark text-primary p-3 rounded-lg' autocomplete='off' action='".htmlspecialchars($_SERVER['PHP_SELF']) ."'><div class='form-group'><label for='item-edit-box'>Item: </label><input type='text' class='form-control' maxlength='50' name='item-edit-box'  id='item-edit-box' value='".$editResult['name']."' required></div><div class='form-group'><label for='url-edit-box'>URL: </label><input type='text' class='form-control'  maxlength='250' name='url-edit-box' id='url-edit-box' value='".$editResult['url']."' required></div><div class='form-group'><label for='title-edit-box'>Title: </label><input type='text'  class='form-control' maxlength='20' name='title-edit-box' id='title-edit-box' value='".$editResult['urlTitle']."' required></div><div class='form-group'><label for='comment-edit-box'>Comment: </label><input type='text'  class='form-control' maxlength='250' name='comment-edit-box' id='comment-edit-box' value='".$editResult['comment']."' required></div><button class='btn btn-primary' type='submit' name='editBtn' id='editBtn'>Edit Item</button></form>";
+									echo "<form method='post' class='bg-dark text-primary p-3 rounded-lg' autocomplete='off' action='".htmlspecialchars($_SERVER['PHP_SELF']) ."'><div class='form-group'><label for='item-edit-box'>Item: </label><input type='text' class='form-control' maxlength='50' name='item-edit-box'  id='item-edit-box' value='".$editResult['name']."' required></div><div class='form-group'><label for='url-edit-box'>URL: </label><input type='text' class='form-control'  maxlength='250' name='url-edit-box' id='url-edit-box' value='".$editResult['url']."' required></div><div class='form-group'><label for='title-edit-box'>Title: </label><input type='text'  class='form-control' maxlength='20' name='title-edit-box' id='title-edit-box' value='".$editResult['urlTitle']."' required></div><div class='form-group'><label for='comment-edit-box'>Comment: </label><input type='text'  class='form-control' maxlength='250' name='comment-edit-box' id='comment-edit-box' value='".$editResult['comment']."' required></div><label for='edit-date-box'>Date: </label><div class='input-group'><input type='date' class='form-control' name='edit-date-box' id='edit-date-box' value='".$editResult['date']."' required><div class='input-group-append'><button class='btn btn-light border' type='button' data-toggle='popover' title='What is the point of the date field?' data-content='The date field is used to automatically remove bought items after they have already been recieved. In order for this feature to work properly, set the date to when you will recieve the item. If the item is not purchased, it will remain on your list. If you do not want your item to disappear after it is bought, set the date to a date in the past.'>�</button></div></div><button class='btn btn-primary mt-2' type='submit' name='editBtn' id='editBtn'>Edit Item</button></form>";
 									}
 								}
 							}//end of elseif's
@@ -274,6 +284,7 @@
             } else {
                 console.log("tab is not a string (likely not defined)");
             }
+            $('[data-toggle="popover"]').popover(); 
         });
 
         //this function toggles items as either public or private
