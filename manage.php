@@ -26,7 +26,9 @@
 		//checks to make sure user is logged in
 					if(!isset($_SESSION["logged"])){
 						echo "<script>location.replace('login.php?nl=true')</script>";
-						}
+						}else{
+                            echo "<script>var user = '".$_SESSION['logged']."'</script>";
+                        }
 			$_SESSION["direct"] = "manage.php";
 			
 		if (file_exists("include/sql.php")){
@@ -89,7 +91,7 @@
                                 <!-- this should break any attempted injections-->
                                 <div class="form-group">
                                     <label for="item-box">Item: </label>
-                                    <input type="text" class="form-control" maxlength="50" name="item-box" id="item-box"
+                                    <input type="text" onkeyup="testName(this.value)" class="form-control" maxlength="50" name="item-box" id="item-box"
                                         placeholder="The name of the item you would like" required>
                                 </div>
 
@@ -119,8 +121,8 @@
                                     <button class="btn btn-light border" type="button" data-toggle="popover" title="What is the point of the date field?" data-content="The date field is used to automatically remove bought items after they have already been recieved. In order for this feature to work properly, set the date to when you will recieve the item. If the item is not purchased, it will remain on your list. If you do not want your item to disappear after it is bought, set the date to a date in the past.">�</button>
                                     </div>
                                 </div>
-
                                 <button class="btn btn-primary mt-2" type="submit" name="addBtn" id="addBtn">Add Item</button>
+                                <p class="text-danger" id="nameWarning"></p>
                             </form>
 
                         </div>
@@ -287,6 +289,21 @@
             $('[data-toggle="popover"]').popover(); 
         });
 
+        //this function prevents dublicate item names from being inputted
+        function testName(temp){
+            console.log(temp);
+            var request = new XMLHttpRequest();
+            request.onload = function(){
+                document.getElementById("nameWarning").innerHTML = this.responseText;
+                if(this.reponseText == "Name taken. Please choose another."){
+                    document.getElementById("addBtn").disabled = "TRUE";
+                }else{
+                    document.getElementById("addBtn").removeAttribute("disabled");
+                }
+            }
+            request.open("GET", "util/checkitemname.php?name=" + encodeURI(temp) + "&user=" + encodeURI(user), true);
+            request.send();
+        }
         //this function toggles items as either public or private
         function toggleView(temp) {
             console.log(temp);
